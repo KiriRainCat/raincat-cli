@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { program } from "commander";
+import inquirer from "inquirer";
 import chalk from "chalk";
 
 import { createProjectPrompt, addPackagePrompt } from "./lib/inquirer.js";
@@ -30,7 +31,7 @@ program
   .option("-f, --force", "如果文件夹存在，进行覆盖")
   .action(async (cmd) => {
     cfonts();
-    const result = await createProjectPrompt();
+    const result = await inquirer.prompt(createProjectPrompt);
     downloadRepo(result.projectName, result.template, cmd.force);
   });
 
@@ -40,11 +41,8 @@ program
   .description("显示 packages 列表并可以选择进行批量安装")
   .action(async () => {
     cfonts();
-    const result = await addPackagePrompt();
-    console.log(result.packages);
-    if (pkginfo.dependencies.hasOwnProperty("prettier")) {
-      console.log("检测到 Prettier，拓展安装以下包 [Tailwind Css] 的联动依赖");
-    }
+    const { packages } = await inquirer.prompt(addPackagePrompt);
+    console.log(packages);
   });
 
 // 解析用户执行命令传入的参数
