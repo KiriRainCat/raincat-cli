@@ -1,0 +1,36 @@
+{
+  "name": "@kiriraincat/raincat-cli",
+  "version": "0.0.1-alpha",
+  "description": "柒夜雨猫牌项目 cli 工具",
+  "exports": "./bin/index.js",
+  "bin": {
+    "raincat": "./bin/index.js"
+  },
+  "keywords": [
+    "typescript",
+    "cli",
+    "typescript 脚手架",
+    "ts 脚手架",
+    "ts-cli",
+    "脚手架"
+  ],
+  "author": "KiriRainCat",
+  "license": "MIT",
+  "files": [
+    "package.json",
+    "README.md",
+    "LICENSE",
+    "bin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KiriRainCat/raincat-cli.git"
+  },
+  "type": "module",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^11.0.0",
+    "download-git-repo": "^3.0.2",
+    "inquirer": "^9.2.8"
+  }
+}
