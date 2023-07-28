@@ -5,8 +5,8 @@ import { program } from "commander";
 import chalk from "chalk";
 
 import { createProjectPrompt, addPackagePrompt } from "./lib/inquirer.js";
-
-import { downloadRepo } from "./utils/download.js";
+import { downloadRepo } from "./lib/download.js";
+import cfonts from "./lib/cfonts.js";
 
 const pkginfo = JSON.parse(await fs.readFile("package.json"));
 
@@ -31,6 +31,7 @@ program
   .description("选择模板创建项目")
   .option("-f, --force", "如果文件夹存在，进行覆盖")
   .action(async (cmd) => {
+    cfonts();
     const result = await createProjectPrompt();
     downloadRepo(result.projectName, result.template, cmd.force);
   });
@@ -40,6 +41,7 @@ program
   .command("add")
   .description("显示 packages 列表并可以选择进行批量安装")
   .action(async () => {
+    cfonts();
     const result = await addPackagePrompt();
     console.log(result.packages);
     if (pkginfo.dependencies.hasOwnProperty("prettier")) {

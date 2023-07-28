@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  cfonts:
+    specifier: ^3.2.0
+    version: 3.2.0
   chalk:
     specifier: ^5.3.0
     version: 5.3.0
@@ -143,6 +146,15 @@ packages:
       isurl: 1.0.0
       tunnel-agent: 0.6.0
       url-to-options: 1.0.1
+    dev: false
+
+  /cfonts@3.2.0:
+    resolution: {integrity: sha512-CFGxRY6aBuOgK85bceCpmMMhuyO6IwcAyyeapB//DtRzm7NbAEsDuuZzBoQxVonz+C2BmZ3swqB/YgcmW+rh3A==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      supports-color: 8.1.1
+      window-size: 1.1.1
     dev: false
 
   /chalk@4.1.2:
@@ -301,6 +313,13 @@ packages:
     resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
     dependencies:
       clone: 1.0.4
+    dev: false
+
+  /define-property@1.0.0:
+    resolution: {integrity: sha512-cZTYKFWspt9jZsMscWo8sc/5lbPC9Q0N5nBLgb+Yd915iL3udB1uFgS3B8YCx66UVHq018DAVFoee7x+gxggeA==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      is-descriptor: 1.0.2
     dev: false
 
   /download-git-repo@3.0.2:
@@ -583,6 +602,33 @@ packages:
       p-is-promise: 1.1.0
     dev: false
 
+  /is-accessor-descriptor@1.0.0:
+    resolution: {integrity: sha512-m5hnHTkcVsPfqx3AKlyttIPb7J+XykHvJP2B9bZDjlhLIoEq4XoK64Vg7boZlVWYK6LUY94dYPEE7Lh0ZkZKcQ==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      kind-of: 6.0.3
+    dev: false
+
+  /is-buffer@1.1.6:
+    resolution: {integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==}
+    dev: false
+
+  /is-data-descriptor@1.0.0:
+    resolution: {integrity: sha512-jbRXy1FmtAoCjQkVmIVYwuuqDFUbaOeDjmed1tOGPrsMhtJA4rD9tkgA0F1qJ3gRFRXcHYVkdeaP50Q5rE/jLQ==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      kind-of: 6.0.3
+    dev: false
+
+  /is-descriptor@1.0.2:
+    resolution: {integrity: sha512-2eis5WqQGV7peooDyLmNEPUrps9+SXX5c9pL3xEB+4e9HnGuDa7mB7kHxHw4CbqS9k1T2hOH3miL8n8WtiYVtg==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      is-accessor-descriptor: 1.0.0
+      is-data-descriptor: 1.0.0
+      kind-of: 6.0.3
+    dev: false
+
   /is-fullwidth-code-point@3.0.0:
     resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
     engines: {node: '>=8'}
@@ -595,6 +641,13 @@ packages:
 
   /is-natural-number@4.0.1:
     resolution: {integrity: sha512-Y4LTamMe0DDQIIAlaer9eKebAlDSV6huy+TWhJVPlzZh2o4tRP5SQWFlLn5N0To4mDD22/qdOq+veo1cSISLgQ==}
+    dev: false
+
+  /is-number@3.0.0:
+    resolution: {integrity: sha512-4cboCqIpliH+mAvFNegjZQ4kgKc3ZUhQVr3HvWbSh5q3WH2v82ct+T2Y1hdU5Gdtorx/cLifQjqCbL7bpznLTg==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      kind-of: 3.2.2
     dev: false
 
   /is-object@1.0.2:
@@ -646,6 +699,18 @@ packages:
     resolution: {integrity: sha512-eguHnq22OE3uVoSYG0LVWNP+4ppamWr9+zWBe1bsNcovIMy6huUJFPgy4mGwCd/rnl3vOLGW1MTlu4c57CT1xA==}
     dependencies:
       json-buffer: 3.0.0
+    dev: false
+
+  /kind-of@3.2.2:
+    resolution: {integrity: sha512-NOW9QQXMoZGg/oqnVNoNTTIFEIid1627WCffUBJEdMxYApq7mNE7CpzucIPc+ZQg25Phej7IJSmX3hO+oblOtQ==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      is-buffer: 1.1.6
+    dev: false
+
+  /kind-of@6.0.3:
+    resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
+    engines: {node: '>=0.10.0'}
     dev: false
 
   /lodash@4.17.21:
@@ -990,6 +1055,13 @@ packages:
       has-flag: 4.0.0
     dev: false
 
+  /supports-color@8.1.1:
+    resolution: {integrity: sha512-MpUEN2OodtUzxvKQl72cUF7RQ5EiHsGvSsVG0ia9c5RbWGL2CI4C7EpPS8UTBIplnlzZiNuV56w+FuNxy3ty2Q==}
+    engines: {node: '>=10'}
+    dependencies:
+      has-flag: 4.0.0
+    dev: false
+
   /tar-stream@1.6.2:
     resolution: {integrity: sha512-rzS0heiNf8Xn7/mpdSVVSMAWAoy9bfb1WOTYC78Z0UQKeKa/CWS8FOq0lKGNa8DWKAn9gxjCvMLYc5PGXYlK2A==}
     engines: {node: '>= 0.8.0'}
@@ -1072,6 +1144,15 @@ packages:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
     dependencies:
       defaults: 1.0.4
+    dev: false
+
+  /window-size@1.1.1:
+    resolution: {integrity: sha512-5D/9vujkmVQ7pSmc0SCBmHXbkv6eaHwXEx65MywhmUMsI8sGqJ972APq1lotfcwMKPFLuCFfL8xGHLIp7jaBmA==}
+    engines: {node: '>= 0.10.0'}
+    hasBin: true
+    dependencies:
+      define-property: 1.0.0
+      is-number: 3.0.0
     dev: false
 
   /wrap-ansi@6.2.0:
