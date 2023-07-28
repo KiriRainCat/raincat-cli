@@ -1,14 +1,12 @@
 #!/usr/bin/env node
 
-import fs from "node:fs/promises";
 import { program } from "commander";
 import chalk from "chalk";
 
 import { createProjectPrompt, addPackagePrompt } from "./lib/inquirer.js";
 import { downloadRepo } from "./lib/download.js";
 import cfonts from "./lib/cfonts.js";
-
-const pkginfo = JSON.parse(await fs.readFile("package.json"));
+import { version } from "./lib/version.cjs";
 
 // 监听 --help 指令
 program.on("--help", () => {
@@ -22,7 +20,7 @@ program.on("--help", () => {
 program.showHelpAfterError();
 
 // 当前版本
-program.version(`v${pkginfo.version}`, "-v, --version", "查看 cli 当前版本号");
+program.version(chalk.bold.cyan.italic.underline(version), "-v, --version", "查看 cli 当前版本号");
 
 /* ----------------------------------- 指令 ----------------------------------- */
 // 创建项目指令
