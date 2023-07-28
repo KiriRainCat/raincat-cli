@@ -1,6 +1,8 @@
 import chalk from "chalk";
 import download from "download-git-repo";
 import fs from "fs";
+import path from "path";
+import process from "process";
 
 /**
  * 下载任意 repository 到指的目录
@@ -11,6 +13,7 @@ import fs from "fs";
  */
 const downloadRepo = (name, template, force) => {
   const dest = process.cwd() + "\\" + name;
+  // 如果路径存在
   if (fs.existsSync(dest)) {
     if (!force) {
       console.log(
@@ -23,6 +26,12 @@ const downloadRepo = (name, template, force) => {
     fs.rmdirSync(dest);
   }
 
+  // 如果与当前路径同名
+  if (process.cwd().endsWith(name)) {
+    dest = process.cwd();
+  }
+
+  // 仓库下载模板
   download(template.repo, dest, (err) => {
     // 报错展示下载失败
     if (err) {
