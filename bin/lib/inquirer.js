@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 
-import packages from "../constants/packages.js";
+import { packages } from "../constants/packages.js";
 import templates from "../constants/templates.js";
 
 const createProjectPrompt = [
@@ -38,8 +38,6 @@ const addPackagePrompt = [
     message: "选择想要安装的 package(s) " + chalk.gray(">>"),
     when: (answers) => answers.framework === "vue",
     choices: [
-      new inquirer.Separator("———— 工具相关 ————"),
-      ...packages.vue.utils,
       new inquirer.Separator("———— UI 相关 ————"),
       ...packages.vue.ui,
       ...packages.common.ui,
@@ -50,8 +48,22 @@ const addPackagePrompt = [
     name: "selectedPackages",
     message: "选择想要安装的 package(s) " + chalk.gray(">>"),
     when: (answers) => answers.framework === "react",
-    choices: [new inquirer.Separator(chalk.gray("———— UI 相关 ————")), ...packages.common.ui],
+    choices: [
+      new inquirer.Separator(chalk.gray("———— UI 相关 ————")),
+      ...packages.react.ui,
+      ...packages.common.ui,
+    ],
   },
 ];
 
-export { createProjectPrompt, addPackagePrompt };
+const extraPackagePrompt = (parentName, pkgName) => {
+  return {
+    type: "confirm",
+    name: "confirm",
+    message: `是否安装附属 ${chalk.cyan(parentName)}: [${chalk.magenta(pkgName)}] ${chalk.gray(
+      ">>"
+    )}`,
+  };
+};
+
+export { createProjectPrompt, addPackagePrompt, extraPackagePrompt };
