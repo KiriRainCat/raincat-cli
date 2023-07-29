@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import download from "download-git-repo";
-import fs from "fs";
+import fs from "fs-extra";
 import ora from "ora";
 import path from "path";
 import process from "process";
@@ -25,7 +25,7 @@ const downloadRepo = (name, template, force) => {
       );
       return;
     }
-    fs.rmSync(dest, { force: true, recursive: true });
+    fs.removeSync(dest);
   }
 
   // 如果与当前路径同名 或 项目名 = "."
