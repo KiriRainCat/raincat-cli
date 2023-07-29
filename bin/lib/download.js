@@ -35,7 +35,7 @@ const downloadRepo = (name, template, force) => {
   }
 
   // 仓库下载模板
-  const spinner = ora({ spinner: "line", suffixText: "downloading..." });
+  const spinner = ora({ spinner: "line", suffixText: "downloading template..." });
   spinner.start();
   download(template.repo, dest, (err) => {
     // 报错展示下载失败
