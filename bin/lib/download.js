@@ -56,7 +56,7 @@ const downloadRepo = (name, template, force) => {
     // 前端项目，展示 pnpm install 等提示
     console.log(`\r\nSuccessfully created project ${chalk.cyan(name)}`);
     console.log(`\r\n  cd ${chalk.cyan(name)}`);
-    console.log("  pnpm install");
+    console.log("  pnpm install"); // TODO: 待适配，多种包管理根据模板进行适配
     console.log("  pnpm run dev\r\n");
   });
 };
