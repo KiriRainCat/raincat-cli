@@ -49,7 +49,7 @@ const addPackagePrompt = [
     message: "选择想要安装的 package(s) " + chalk.gray(">>"),
     when: (answers) => answers.framework === "react",
     choices: [
-      new inquirer.Separator(chalk.gray("———— UI 相关 ————")),
+      new inquirer.Separator("———— UI 相关 ————"),
       ...packages.react.ui,
       ...packages.common.ui,
     ],
