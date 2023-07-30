@@ -1,3 +1,5 @@
+import scripts from "./scripts/index.js";
+
 const packages = {
   common: {
     ui: [
@@ -6,14 +8,14 @@ const packages = {
         value: {
           name: "Tailwind CSS",
           command: "pnpm add -D tailwindcss postcss autoprefixer",
+          postInstallActions: [scripts.tailwindcss_createConfig],
           extras: [
             {
               name: "类名自动整理插件(Prettier)",
-              command: "pnpm add -D prettier-plugin-tailwindcss",
-              postInstallActions: [],
+              command: "pnpm add -D prettier-plugin-tailwindcss prettier",
+              postInstallActions: [scripts.tailwindcss_extra_setConfig],
             },
           ],
-          postInstallActions: [],
         },
       },
     ],
