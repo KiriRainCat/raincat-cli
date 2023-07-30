@@ -1,6 +1,6 @@
 {
   "name": "@kiriraincat/raincat-cli",
-  "version": "0.0.7-alpha",
+  "version": "0.1.0-beta",
   "description": "柒夜雨猫牌项目 cli 工具",
   "exports": "./bin/index.js",
   "bin": {
