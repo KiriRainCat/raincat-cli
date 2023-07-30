@@ -1,10 +1,12 @@
 import inquirer from "inquirer";
+import chalk from "chalk";
 import ora from "ora";
 import { exec } from "child_process";
 
 import { extraPackagePrompt } from "./inquirer.js";
 import { ifArrayEmpty } from "./utils.js";
-import chalk from "chalk";
+
+//* ----------------------------------- 包处理 ---------------------------------- *//
 
 /**
  * 添加 package 到项目：预处理
@@ -16,72 +18,93 @@ const addPackages = async (packages) => {
 
   // 遍历 packages 数组
   for (const pkg of packages) {
-    pkgs.push({ name: pkg.name, command: pkg.command });
+    pkgs.push(pkg);
 
     // 如果当前包有可添加附属
     if (!ifArrayEmpty(pkg.extras)) {
       for (const extra of pkg.extras) {
         // 询问是否安装附属
-        if (await inquirer.prompt(extraPackagePrompt(pkg.name, extra.name))) {
-          pkgs.push({ name: extra.name, command: extra.command });
+        if ((await inquirer.prompt(extraPackagePrompt(pkg.name, extra.name))).confirm) {
+          pkgs.push(extra);
         }
       }
     }
   }
 
-  await installPackages(pkgs);
+  installPackages(pkgs);
 };
 
-/**
- * 安装多个 packages 到项目
- *
- * @param {Array<object>} pkgs 包列表 { name, command }
- */
-const installPackages = async (pkgs) => {
-  const postInstallActions = [];
+//* ----------------------------------- 包安装 ---------------------------------- *//
 
-  for (const pkg of pkgs) {
+const postInstallActions = [];
+
+const installPackage = (pkg) => {
+  return new Promise((resolve, reject) => {
     const spinner = ora({ spinner: "line" });
     spinner.start(`installing package ${chalk.cyan(pkg.name)}`);
 
     // 如果当前包有安装后特殊操作
     if (!ifArrayEmpty(pkg.postInstallActions)) {
-      for (const action of pkg.postInstallActions) {
-        postInstallActions.push({ name: pkg.name, action });
+      for (const func of pkg.postInstallActions) {
+        postInstallActions.push({ name: pkg.name, func });
       }
     }
 
     exec(pkg.command, (err, stdout, stderr) => {
       if (err) {
+        spinner.stop();
         console.log(chalk.red(`❌  ${chalk.cyan(pkg.name)} 安装失败！`));
         console.log(`stdout: ${stdout}`);
         console.error(`stderr: ${stderr}`);
-        return;
+        reject(err);
+      } else {
+        spinner.stop();
+        console.log(chalk.green(`✔️  ${chalk.cyan(pkg.name)} 安装成功！`));
+        exec("pnpm i", () => resolve());
       }
-
-      spinner.stop();
-      console.log(chalk.green(`✔️  ${chalk.cyan(pkg.name)} 安装成功！`));
     });
-  }
-
-  await postInstall(postInstallActions);
+  });
 };
 
-// TODO: 待添加与完善
 /**
- * 运行某些 package 需要 post install actions
+ * 安装多个 packages 到项目
+ *
+ * @param {Array<object>} pkgs 包列表 { name, command, postInstallActions?, extras? }
+ */
+const installPackages = async (pkgs) => {
+  console.log();
+
+  const promises = pkgs.map(installPackage);
+
+  for (const promise of promises) {
+    await promise;
+  }
+  postInstall(postInstallActions);
+};
+
+//* ---------------------------- 包安装后需要运行的 actions --------------------------- *//
+const executeAction = (action) => {
+  return new Promise(async (resolve) => {
+    await action.func();
+    resolve();
+  });
+};
+
+/**
+ * 运行某些 package 需要的 post install actions
  *
  * @param {Array<object>} postInstallActions { name, action }
  */
 const postInstall = async (postInstallActions) => {
+  const promises = postInstallActions.map(executeAction);
+
   const spinner = ora({ spinner: "line", suffixText: "executing postinstall actions..." });
   spinner.start();
 
-  for (const action of postInstallActions) {
-    console.log(`running postinstall script for ${action.name}P`);
-  }
+  await Promise.all(promises);
 
   spinner.stop();
+  console.log(chalk.bold.green("\n" + "✔️  执行 postinstall actions 成功！"));
 };
 
 // TODO: 待添加与完善 -- 自动适配包管理器
