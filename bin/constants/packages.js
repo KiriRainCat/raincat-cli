@@ -26,8 +26,49 @@ const packages = {
         name: "Element Plus",
         value: {
           name: "Element Plus",
-          command: "pnpm add element-plus",
+          command: "pnpm add -D element-plus",
           postInstallActions: [],
+        },
+      },
+      {
+        name: "Arco Design",
+        value: {
+          name: "Arco Design",
+          command: "pnpm add -D @arco-design/web-vue",
+          postInstallActions: [],
+        },
+      },
+      {
+        name: "Naive UI",
+        value: {
+          name: "Naive UI",
+          command: "pnpm add -D naive-ui",
+          postInstallActions: [],
+        },
+      },
+      {
+        name: "Vant 4 (m)",
+        value: {
+          name: "Vant 4 (m)",
+          command: "pnpm add -D vant",
+          postInstallActions: [],
+        },
+      },
+      {
+        name: "Varlet (m)",
+        value: {
+          name: "Varlet (m)",
+          command: "pnpm add -D @varlet/ui",
+          postInstallActions: [],
+        },
+      },
+    ],
+    utils: [
+      {
+        name: "VueUse",
+        value: {
+          name: "VueUse",
+          command: "pnpm add @vueuse/core",
         },
       },
     ],
