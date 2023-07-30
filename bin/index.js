@@ -7,7 +7,7 @@ import chalk from "chalk";
 import { createProjectPrompt, addPackagePrompt } from "./lib/inquirer.js";
 import { downloadRepo } from "./lib/download.js";
 import cfonts from "./lib/cfonts.js";
-import { version } from "./lib/version.cjs";
+import { version } from "./lib/info.cjs";
 import addPackages from "./lib/addPackage.js";
 
 // 监听 --help 指令
