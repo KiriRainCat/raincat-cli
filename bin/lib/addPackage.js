@@ -40,9 +40,10 @@ const addPackages = async (packages) => {
 const installPackages = async (pkgs) => {
   const postInstallActions = [];
 
-  const spinner = ora({ spinner: "line" });
-
   for (const pkg of pkgs) {
+    const spinner = ora({ spinner: "line" });
+    spinner.start(`installing package ${chalk.cyan(pkg.name)}`);
+
     // 如果当前包有安装后特殊操作
     if (!ifArrayEmpty(pkg.postInstallActions)) {
       for (const action of pkg.postInstallActions) {
@@ -50,16 +51,15 @@ const installPackages = async (pkgs) => {
       }
     }
 
-    spinner.start(`installing package ${chalk.cyan(pkg.name)}`);
     exec(pkg.command, (err, stdout, stderr) => {
-      spinner.stop();
-
       if (err) {
         console.log(chalk.red(`❌  ${chalk.cyan(pkg.name)} 安装失败！`));
         console.log(`stdout: ${stdout}`);
         console.error(`stderr: ${stderr}`);
         return;
       }
+
+      spinner.stop();
       console.log(chalk.green(`✔️  ${chalk.cyan(pkg.name)} 安装成功！`));
     });
   }
