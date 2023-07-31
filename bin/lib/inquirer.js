@@ -41,7 +41,7 @@ const addPackagePrompt = [
   },
   {
     type: "search-checkbox",
-    name: "selectedPackages",
+    name: "packages",
     message: "选择想要安装的 package(s) " + chalk.gray(">>"),
     when: (answers) => {
       ans = answers.framework;
