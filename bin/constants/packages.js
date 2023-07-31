@@ -2,7 +2,7 @@ import scripts from "./scripts/index.js";
 
 const packages = {
   common: {
-    ui: [
+    Style: [
       {
         name: "Tailwind CSS",
         value: {
@@ -21,7 +21,7 @@ const packages = {
     ],
   },
   vue: {
-    ui: [
+    UI: [
       {
         name: "Element Plus",
         value: {
@@ -63,7 +63,7 @@ const packages = {
         },
       },
     ],
-    utils: [
+    Utils: [
       {
         name: "VueUse",
         value: {
@@ -74,7 +74,7 @@ const packages = {
     ],
   },
   react: {
-    ui: [],
+    UI: [],
   },
 };
 
