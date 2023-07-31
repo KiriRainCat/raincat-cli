@@ -95,6 +95,7 @@ const packages = {
         value: {
           name: "Prisma",
           command: "go get -u github.com/steebchen/prisma-client-go",
+          postInstallActions: [scripts.prisma_initGoSchema],
         },
       },
       {
