@@ -1,0 +1,90 @@
+diff --git a/dist/index.js b/dist/index.js
+index 5f35c7e47f4715850b69e0185d697a1b69445d4e..bd2ba4a228cec44d562c0d7d51c2a81fa151e2ce 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -37,9 +37,14 @@ function renderChoices(choices, pointer) {
+             output = output + " - " + choice.name + " (Disabled)";
+         }
+         else {
+-            var isSelected = i === pointer;
+-            output += isSelected ? chalk_1.default.cyan(figures.pointer) : " ";
+-            output += getCheckbox(choice.checked) + " " + choice.name;
++            var choiceOutput = " " + getCheckbox(choice.checked) + " " + choice.name;
++			// Is the pointer on the current choice
++			if (i === pointer) {
++				choiceOutput = chalk_1.default.blue(figures.pointer + choiceOutput);
++			} else {
++				choiceOutput = " " + choiceOutput;
++			}
++			output += choiceOutput;
+         }
+         output += "\n";
+     });
+@@ -74,15 +79,27 @@ var SearchBox = (function (_super) {
+     SearchBox.prototype.render = function (error) {
+         var message = this.getQuestion();
+         var bottomContent = "";
+-        var tip = chalk_1.default.dim("(Press <space> to select, <enter> to submit.)");
++        var tip = chalk_1.default.gray(`(Press ${chalk_1.default.cyan("<space>")} to select, ${chalk_1.default.cyan("<enter>")} to submit. ${chalk_1.default.magenta("#Searchable")})`);
+         if (this.status === "answered") {
+             message += chalk_1.default.cyan(this.selection.join(", "));
+         }
+-        else {
+-            message += tip + " " + this.rl.line;
+-            var choicesStr = renderChoices(this.filterList, this.pointer);
+-            bottomContent = this.paginator.paginate(choicesStr, this.pointer, this.opt.pageSize);
++        else if (this.filterList.length) {
++			// The user entered a search filter
++			if (this.rl.line.length) {
++				message += `${this.rl.line}`;
++			// No searching filter
++			} else {
++				message += `${tip} ${this.rl.line}`;
++			}
++
++			const choicesStr = renderChoices(this.filterList, this.pointer);
++			bottomContent = this.paginator.paginate(choicesStr, this.pointer, this.opt.pageSize);
+         }
++		// When there aren't any matched choices
++        else {
++			message += this.rl.line;
++			bottomContent = '  ' + chalk_1.default.yellow('No results...');
++		}
+         if (error) {
+             bottomContent = chalk_1.default.red(">> ") + error;
+         }
+@@ -101,6 +118,7 @@ var SearchBox = (function (_super) {
+         }
+     };
+     SearchBox.prototype.onSpaceKey = function () {
++        this.rl.cursor = this.rl.line.length - 1
+         this.rl.line = this.rl.line.trim();
+         this.toggleChoice(this.pointer);
+         this.render();
+@@ -133,6 +151,7 @@ var SearchBox = (function (_super) {
+         this.render(state.isValid);
+     };
+     SearchBox.prototype.onKeyPress = function () {
++        this.rl.cursor = this.rl.line.length
+         this.pointer = 0;
+         this.filterChoices();
+         this.render();
+@@ -146,12 +165,12 @@ var SearchBox = (function (_super) {
+         this.done = cb;
+         var events = observe(this.rl);
+         var upKey = events.keypress.filter(function (e) {
+-            return e.key.name === "up" || (e.key.name === "p" && e.key.ctrl);
++            return e.key.name === "up";
+         });
+         var downKey = events.keypress.filter(function (e) {
+-            return e.key.name === "down" || (e.key.name === "n" && e.key.ctrl);
++            return e.key.name === "down";
+         });
+-        var allKey = events.keypress.filter(function (e) { return e.key.name === "o" && e.key.ctrl; });
++        var allKey = events.keypress.filter(function (e) { return e.key.name === "a" && e.key.ctrl; });
+         var validation = this.handleSubmitEvents(events.line.map(this.getCurrentValue.bind(this)));
+         validation.success.forEach(this.onEnd.bind(this));
+         validation.error.forEach(this.onError.bind(this));
+diff --git a/yarn.lock b/yarn.lock
+deleted file mode 100644
+index 86bbcebef47506d78f37789e092e212e0cc068a7..0000000000000000000000000000000000000000

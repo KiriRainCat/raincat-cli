@@ -1,6 +1,6 @@
 {
   "name": "@kiriraincat/raincat-cli",
-  "version": "0.1.2-beta",
+  "version": "0.1.3-beta",
   "description": "柒夜雨猫牌项目 cli 工具",
   "exports": "./bin/index.js",
   "bin": {
@@ -18,7 +18,8 @@
     "package.json",
     "README.md",
     "LICENSE",
-    "bin"
+    "bin",
+    "patches"
   ],
   "repository": {
     "type": "git",
@@ -36,5 +37,10 @@
     "mustache": "^4.2.0",
     "ora": "^7.0.0",
     "prettier": "^3.0.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "inquirer-search-checkbox@1.0.0": "patches/inquirer-search-checkbox@1.0.0.patch"
+    }
   }
 }
