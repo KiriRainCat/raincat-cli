@@ -61,8 +61,7 @@ const installPackages = async (pkgs) => {
       const spinner = ora({ spinner: "line" });
       spinner.start(`installing package ${chalk.cyan(pkg.name)}`);
 
-      result = await execa(pkg.command);
-      console.log(result.stdout);
+      result = await execa(pkg.command, { shell: true });
 
       spinner.stop();
       console.log(chalk.green(`✔️  ${chalk.cyan(pkg.name)} 安装成功！`));
@@ -71,7 +70,6 @@ const installPackages = async (pkgs) => {
       console.log(chalk.red(`❌  ${chalk.cyan(pkg.name)} 安装失败！`));
       console.log(`stdout: ${result.stdout}`);
       console.error(`stderr: ${result.stderr}`);
-      reject(err);
     }
   }
 
