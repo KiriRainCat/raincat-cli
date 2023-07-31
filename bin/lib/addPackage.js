@@ -14,8 +14,11 @@ import { ifArrayEmpty } from "./utils.js";
  * @param {Array<object>} packages
  */
 const addPackages = async (packages) => {
-  const pkgs = [];
+  if (ifArrayEmpty(packages)) {
+    return;
+  }
 
+  const pkgs = [];
   // 遍历 packages 数组
   for (const pkg of packages) {
     pkgs.push(pkg);
@@ -60,7 +63,9 @@ const installPackage = (pkg) => {
       } else {
         spinner.stop();
         console.log(chalk.green(`✔️  ${chalk.cyan(pkg.name)} 安装成功！`));
-        exec("pnpm i", () => resolve());
+        if (pkg.command.includes("npm") || pkg.command.includes("yarn"))
+          exec("pnpm i", () => resolve());
+        resolve();
       }
     });
   });
@@ -96,15 +101,22 @@ const executeAction = (action) => {
  * @param {Array<object>} postInstallActions { name, action }
  */
 const postInstall = async (postInstallActions) => {
+  if (ifArrayEmpty(postInstallActions)) {
+    return;
+  }
+
   const promises = postInstallActions.map(executeAction);
 
+  console.log();
   const spinner = ora({ spinner: "line", suffixText: "executing postinstall actions..." });
   spinner.start();
 
   await Promise.all(promises);
 
   spinner.stop();
-  console.log(chalk.bold.green("\n" + "✔️  执行 postinstall actions 成功！"));
+  console.log(chalk.bold.green("✔️  执行 postinstall actions 成功！"));
+  //? 不知道怎么解决进程不终止的文件，先直接强制 exit 吧，反正方法都执行完了
+  process.exit();
 };
 
 // TODO: 待添加与完善 -- 自动适配包管理器
