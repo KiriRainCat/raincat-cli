@@ -3,6 +3,10 @@ import chalk from "chalk";
 
 import { packages } from "../constants/packages.js";
 import templates from "../constants/templates.js";
+import { parseChoices } from "./utils.js";
+
+import SearchBox from "inquirer-search-checkbox";
+inquirer.registerPrompt("search-checkbox", SearchBox);
 
 const createProjectPrompt = [
   {
@@ -25,34 +29,26 @@ const addPackagePrompt = [
     name: "framework",
     message: "选择当前正在使用的[框架|语言] " + chalk.gray(">>"),
     choices: [
-      new inquirer.Separator("———— Web 前端 ————"),
+      new inquirer.Separator("———— 前端 ————"),
       { name: chalk.greenBright("Vue"), value: "vue" },
       { name: chalk.blueBright("React"), value: "react" },
-      new inquirer.Separator("———— Web 后端 ————"),
+      new inquirer.Separator("———— 后端 ————"),
       { name: chalk.cyanBright("Golang"), value: "go" },
     ],
   },
   {
-    type: "checkbox",
+    type: "search-checkbox",
     name: "packages",
     message: "选择想要安装的 package(s) " + chalk.gray(">>"),
     when: (answers) => answers.framework === "vue",
-    choices: [
-      new inquirer.Separator("———— UI 相关 ————"),
-      ...packages.vue.ui,
-      ...packages.common.ui,
-    ],
+    choices: [...parseChoices(packages.vue, packages.common)],
   },
   {
-    type: "checkbox",
+    type: "search-checkbox",
     name: "selectedPackages",
     message: "选择想要安装的 package(s) " + chalk.gray(">>"),
     when: (answers) => answers.framework === "react",
-    choices: [
-      new inquirer.Separator("———— UI 相关 ————"),
-      ...packages.react.ui,
-      ...packages.common.ui,
-    ],
+    choices: [...parseChoices(packages.react, packages.common)],
   },
 ];
 
