@@ -2,23 +2,26 @@ import scripts from "./scripts/index.js";
 
 const packages = {
   common: {
-    Style: [
-      {
-        name: "Tailwind CSS",
-        value: {
+    frontend: {
+      Style: [
+        {
           name: "Tailwind CSS",
-          command: "pnpm add -D tailwindcss postcss autoprefixer",
-          postInstallActions: [scripts.tailwindcss_createConfig],
-          extras: [
-            {
-              name: "类名自动整理插件(Prettier)",
-              command: "pnpm add -D prettier-plugin-tailwindcss prettier",
-              postInstallActions: [scripts.tailwindcss_extra_setConfig],
-            },
-          ],
+          value: {
+            name: "Tailwind CSS",
+            command: "pnpm add -D tailwindcss postcss autoprefixer",
+            postInstallActions: [scripts.tailwindcss_createConfig],
+            extras: [
+              {
+                name: "类名自动整理插件(Prettier)",
+                command: "pnpm add -D prettier-plugin-tailwindcss prettier",
+                postInstallActions: [scripts.tailwindcss_extra_setConfig],
+              },
+            ],
+          },
         },
-      },
-    ],
+      ],
+    },
+    backend: {},
   },
   vue: {
     UI: [
@@ -75,6 +78,51 @@ const packages = {
   },
   react: {
     UI: [],
+  },
+  go: {
+    Utils: [
+      {
+        name: "Viper",
+        value: {
+          name: "Viper",
+          command: "go get -u github.com/spf13/viper",
+        },
+      },
+    ],
+    DB: [
+      {
+        name: "Prisma",
+        value: {
+          name: "Prisma",
+          command: "go get -u github.com/steebchen/prisma-client-go",
+        },
+      },
+      {
+        name: "Gorm",
+        value: {
+          name: "Gorm",
+          command: "go get -u gorm.io/gorm",
+        },
+      },
+    ],
+  },
+  flutter: {
+    Utils: [
+      {
+        name: "GetX",
+        value: {
+          name: "GetX",
+          command: "flutter pub add get",
+        },
+      },
+      {
+        name: "Process Run",
+        value: {
+          name: "Process Run",
+          command: "flutter pub add process_run",
+        },
+      },
+    ],
   },
 };
 

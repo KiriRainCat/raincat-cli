@@ -23,6 +23,7 @@ const createProjectPrompt = [
   },
 ];
 
+let ans;
 const addPackagePrompt = [
   {
     type: "list",
@@ -30,25 +31,28 @@ const addPackagePrompt = [
     message: "选择当前正在使用的[框架|语言] " + chalk.gray(">>"),
     choices: [
       new inquirer.Separator("———— 前端 ————"),
-      { name: chalk.greenBright("Vue"), value: "vue" },
-      { name: chalk.blueBright("React"), value: "react" },
+      { name: chalk.greenBright("Vue"), value: { name: "vue", isFrontend: true } },
+      { name: chalk.blueBright("React"), value: { name: "react", isFrontend: true } },
       new inquirer.Separator("———— 后端 ————"),
       { name: chalk.cyanBright("Golang"), value: "go" },
+      new inquirer.Separator("———— 全栈 ————"),
+      { name: chalk.cyanBright("Flutter"), value: "flutter" },
     ],
-  },
-  {
-    type: "search-checkbox",
-    name: "packages",
-    message: "选择想要安装的 package(s) " + chalk.gray(">>"),
-    when: (answers) => answers.framework === "vue",
-    choices: [...parseChoices(packages.vue, packages.common)],
   },
   {
     type: "search-checkbox",
     name: "selectedPackages",
     message: "选择想要安装的 package(s) " + chalk.gray(">>"),
-    when: (answers) => answers.framework === "react",
-    choices: [...parseChoices(packages.react, packages.common)],
+    when: (answers) => {
+      ans = answers.framework;
+      return ans !== undefined;
+    },
+    choices: () => [
+      ...parseChoices(
+        packages[ans.name || ans],
+        ans.isFrontend ? packages.common.frontend : packages.common.backend
+      ),
+    ],
   },
 ];
 
