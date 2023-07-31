@@ -39,7 +39,6 @@
     "inquirer-search-checkbox": "^1.0.0",
     "mustache": "^4.2.0",
     "ora": "^7.0.0",
-    "patch-package": "^8.0.0",
     "prettier": "^3.0.0"
   }
 }
