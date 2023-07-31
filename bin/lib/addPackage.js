@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
-import { exec } from "child_process";
+import { execa } from "execa";
 
 import { extraPackagePrompt } from "./inquirer.js";
 import { ifArrayEmpty } from "./utils.js";
@@ -39,38 +39,6 @@ const addPackages = async (packages) => {
 
 //* ----------------------------------- 包安装 ---------------------------------- *//
 
-const postInstallActions = [];
-
-const installPackage = (pkg) => {
-  return new Promise((resolve, reject) => {
-    const spinner = ora({ spinner: "line" });
-    spinner.start(`installing package ${chalk.cyan(pkg.name)}`);
-
-    // 如果当前包有安装后特殊操作
-    if (!ifArrayEmpty(pkg.postInstallActions)) {
-      for (const func of pkg.postInstallActions) {
-        postInstallActions.push({ name: pkg.name, func });
-      }
-    }
-
-    exec(pkg.command, (err, stdout, stderr) => {
-      if (err) {
-        spinner.stop();
-        console.log(chalk.red(`❌  ${chalk.cyan(pkg.name)} 安装失败！`));
-        console.log(`stdout: ${stdout}`);
-        console.error(`stderr: ${stderr}`);
-        reject(err);
-      } else {
-        spinner.stop();
-        console.log(chalk.green(`✔️  ${chalk.cyan(pkg.name)} 安装成功！`));
-        if (pkg.command.includes("npm") || pkg.command.includes("yarn"))
-          exec("pnpm i", () => resolve());
-        resolve();
-      }
-    });
-  });
-};
-
 /**
  * 安装多个 packages 到项目
  *
@@ -78,12 +46,35 @@ const installPackage = (pkg) => {
  */
 const installPackages = async (pkgs) => {
   console.log();
+  const postInstallActions = [];
 
-  const promises = pkgs.map(installPackage);
+  for (const pkg of pkgs) {
+    // 如果当前包有安装后特殊操作
+    if (!ifArrayEmpty(pkg.postInstallActions)) {
+      for (const func of pkg.postInstallActions) {
+        postInstallActions.push({ name: pkg.name, func });
+      }
+    }
 
-  for (const promise of promises) {
-    await promise;
+    let result;
+    try {
+      const spinner = ora({ spinner: "line" });
+      spinner.start(`installing package ${chalk.cyan(pkg.name)}`);
+
+      result = await execa(pkg.command);
+      console.log(result.stdout);
+
+      spinner.stop();
+      console.log(chalk.green(`✔️  ${chalk.cyan(pkg.name)} 安装成功！`));
+    } catch (err) {
+      spinner.stop();
+      console.log(chalk.red(`❌  ${chalk.cyan(pkg.name)} 安装失败！`));
+      console.log(`stdout: ${result.stdout}`);
+      console.error(`stderr: ${result.stderr}`);
+      reject(err);
+    }
   }
+
   postInstall(postInstallActions);
 };
 
