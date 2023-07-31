@@ -1,7 +1,7 @@
 diff --git a/dist/index.js b/dist/index.js
 index 5f35c7e47f4715850b69e0185d697a1b69445d4e..bd2ba4a228cec44d562c0d7d51c2a81fa151e2ce 100644
---- a/dist/index.js
-+++ b/dist/index.js
+--- a/node_modules/inquirer-search-checkbox/dist/index.js
++++ b/node_modules/inquirer-search-checkbox/dist/index.js
 @@ -37,9 +37,14 @@ function renderChoices(choices, pointer) {
              output = output + " - " + choice.name + " (Disabled)";
          }
@@ -85,6 +85,5 @@ index 5f35c7e47f4715850b69e0185d697a1b69445d4e..bd2ba4a228cec44d562c0d7d51c2a81f
          var validation = this.handleSubmitEvents(events.line.map(this.getCurrentValue.bind(this)));
          validation.success.forEach(this.onEnd.bind(this));
          validation.error.forEach(this.onError.bind(this));
-diff --git a/yarn.lock b/yarn.lock
 deleted file mode 100644
 index 86bbcebef47506d78f37789e092e212e0cc068a7..0000000000000000000000000000000000000000
