@@ -50,17 +50,17 @@ const packages = {
         },
       },
       {
-        name: "Vant 4 (m)",
+        name: "Vant 4 (mobile)",
         value: {
-          name: "Vant 4 (m)",
+          name: "Vant 4 (mobile)",
           command: "-D vant",
           postInstallActions: [],
         },
       },
       {
-        name: "Varlet (m)",
+        name: "Varlet (mobile)",
         value: {
-          name: "Varlet (m)",
+          name: "Varlet (mobile)",
           command: "-D @varlet/ui",
           postInstallActions: [],
         },
@@ -114,6 +114,13 @@ const packages = {
         value: {
           name: "GetX",
           command: "flutter pub add get",
+        },
+      },
+      {
+        name: "msix (win 打包)",
+        value: {
+          name: "msix (win 打包)",
+          command: "flutter pub add --dev msix",
         },
       },
       {
