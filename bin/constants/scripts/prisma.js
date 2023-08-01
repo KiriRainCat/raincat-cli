@@ -10,26 +10,36 @@ const prisma_initGoSchema = async () => {
   }
 
   // schema 文件写入
-  await fs.copyFile(
-    path.join(__dirname, "templates/prisma/schema.go.prisma"),
-    "./prisma/schema.prisma"
-  );
+  if (!fs.existsSync("./prisma/schema.prisma")) {
+    await fs.copyFile(
+      path.join(__dirname, "templates/prisma/schema.go.prisma"),
+      "./prisma/schema.prisma"
+    );
+  }
 
   // .env 写入
-  fs.appendFileSync(
-    ".env",
-    fs.readFileSync(path.join(__dirname, "templates/prisma/.env")).toString()
-  );
+  if (fs.existsSync("./.env")) {
+    if (!fs.readFileSync("./.env").toString().includes("DATABASE_URL")) {
+      fs.appendFileSync(
+        ".env",
+        fs.readFileSync(path.join(__dirname, "templates/prisma/.env")).toString()
+      );
+    }
+  } else {
+    await fs.copyFile(path.join(__dirname, "templates/prisma/.env"), "./.env");
+  }
 
   // .gitignore 写入
-  let gitignoreString = "# Keep environment variables out of version control\n.env";
-  if (
-    fs.existsSync("./.gitignore") &&
-    !fs.readFileSync("./.gitignore").toString().includes(".env")
-  ) {
-    gitignoreString = "\n" + gitignoreString;
+  if (fs.existsSync("./.gitignore")) {
+    if (!fs.readFileSync("./.gitignore").toString().includes(".env")) {
+      fs.appendFileSync(
+        "./.gitignore",
+        "\n # Keep environment variables out of version control\n.env"
+      );
+    }
+  } else {
+    fs.appendFileSync("./.gitignore", "# Keep environment variables out of version control\n.env");
   }
-  fs.appendFileSync("./.gitignore", gitignoreString);
 };
 
 const prisma_initSchema = async () => {};
