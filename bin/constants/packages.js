@@ -108,26 +108,84 @@ const packages = {
     ],
   },
   flutter: {
+    LeanFlutter: [
+      {
+        name: "Window Manager",
+        value: {
+          name: "Window Manager",
+          command: "flutter pub add window_manager",
+          postInstallActions: [() => scripts.flutter_showFlutterLeanWebsite("Window Manager")],
+        },
+      },
+      {
+        name: "Hotkey Manager",
+        value: {
+          name: "Hotkey Manager",
+          command: "flutter pub add hotkey_manager",
+          postInstallActions: [() => scripts.flutter_showFlutterLeanWebsite("Hotkey Manager")],
+        },
+      },
+      {
+        name: "Launch At Startup",
+        value: {
+          name: "Launch At Startup",
+          command: "flutter pub add launch_at_startup",
+          postInstallActions: [() => scripts.flutter_showFlutterLeanWebsite("Launch At Startup")],
+        },
+      },
+      {
+        name: "Tray Manager",
+        value: {
+          name: "Tray Manager",
+          command: "flutter pub add tray_manager",
+          postInstallActions: [() => scripts.flutter_showFlutterLeanWebsite("Tray Manager")],
+        },
+      },
+      {
+        name: "Screen Retriever",
+        value: {
+          name: "Screen Retriever",
+          command: "flutter pub add screen_retriever",
+          postInstallActions: [() => scripts.flutter_showFlutterLeanWebsite("Screen Retriever")],
+        },
+      },
+      {
+        name: "Auto Updater",
+        value: {
+          name: "Auto Updater",
+          command: "flutter pub add auto_updater",
+          postInstallActions: [() => scripts.flutter_showFlutterLeanWebsite("Auto Updater")],
+        },
+      },
+      {
+        name: "Local Notifier",
+        value: {
+          name: "Local Notifier",
+          command: "flutter pub add local_notifier",
+          postInstallActions: [() => scripts.flutter_showFlutterLeanWebsite("Local Notifier")],
+        },
+      },
+    ],
     Utils: [
-      {
-        name: "GetX",
-        value: {
-          name: "GetX",
-          command: "flutter pub add get",
-        },
-      },
-      {
-        name: "msix (win 打包)",
-        value: {
-          name: "msix (win 打包)",
-          command: "flutter pub add --dev msix",
-        },
-      },
+      // {
+      //   name: "msix (win 打包)",
+      //   value: {
+      //     name: "msix (win 打包)",
+      //     command: "flutter pub add --dev msix",
+      //   },
+      // },
       {
         name: "Process Run",
         value: {
           name: "Process Run",
           command: "flutter pub add process_run",
+        },
+      },
+      {
+        name: "GetX",
+        value: {
+          name: "GetX",
+          command: "flutter pub add get",
         },
       },
     ],
