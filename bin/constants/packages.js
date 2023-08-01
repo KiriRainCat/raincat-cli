@@ -8,12 +8,12 @@ const packages = {
           name: "Tailwind CSS",
           value: {
             name: "Tailwind CSS",
-            command: "pnpm add -D tailwindcss postcss autoprefixer",
+            command: "-D tailwindcss postcss autoprefixer",
             postInstallActions: [scripts.tailwindcss_createConfig],
             extras: [
               {
                 name: "类名自动整理插件(Prettier)",
-                command: "pnpm add -D prettier-plugin-tailwindcss prettier",
+                command: "-D prettier-plugin-tailwindcss prettier",
                 postInstallActions: [scripts.tailwindcss_extra_setConfig],
               },
             ],
@@ -29,7 +29,7 @@ const packages = {
         name: "Element Plus",
         value: {
           name: "Element Plus",
-          command: "pnpm add -D element-plus",
+          command: "-D element-plus",
           postInstallActions: [],
         },
       },
@@ -37,7 +37,7 @@ const packages = {
         name: "Arco Design",
         value: {
           name: "Arco Design",
-          command: "pnpm add -D @arco-design/web-vue",
+          command: "-D @arco-design/web-vue",
           postInstallActions: [],
         },
       },
@@ -45,7 +45,7 @@ const packages = {
         name: "Naive UI",
         value: {
           name: "Naive UI",
-          command: "pnpm add -D naive-ui",
+          command: "-D naive-ui",
           postInstallActions: [],
         },
       },
@@ -53,7 +53,7 @@ const packages = {
         name: "Vant 4 (m)",
         value: {
           name: "Vant 4 (m)",
-          command: "pnpm add -D vant",
+          command: "-D vant",
           postInstallActions: [],
         },
       },
@@ -61,7 +61,7 @@ const packages = {
         name: "Varlet (m)",
         value: {
           name: "Varlet (m)",
-          command: "pnpm add -D @varlet/ui",
+          command: "-D @varlet/ui",
           postInstallActions: [],
         },
       },
@@ -71,7 +71,7 @@ const packages = {
         name: "VueUse",
         value: {
           name: "VueUse",
-          command: "pnpm add @vueuse/core",
+          command: "@vueuse/core",
         },
       },
     ],
@@ -127,7 +127,31 @@ const packages = {
   },
 };
 
-// TODO: 待完善
-const pkgManagers = {};
+const pkgManagers = [
+  {
+    name: "pnpm",
+    value: {
+      name: "pnpm",
+      lockFile: "pnpm-lock.yaml",
+      add: "pnpm add",
+    },
+  },
+  {
+    name: "npm",
+    value: {
+      name: "npm",
+      lockFile: "package-lock.json",
+      add: "npm install",
+    },
+  },
+  {
+    name: "yarn",
+    value: {
+      name: "yarn",
+      lockFile: "yarn.lock",
+      add: "yarn add",
+    },
+  },
+];
 
 export { packages, pkgManagers };

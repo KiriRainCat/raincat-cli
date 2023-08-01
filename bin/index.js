@@ -8,7 +8,7 @@ import { createProjectPrompt, addPackagePrompt } from "./lib/inquirer.js";
 import { downloadRepo } from "./lib/download.js";
 import cfonts from "./lib/cfonts.js";
 import { version } from "./lib/info.cjs";
-import addPackages from "./lib/addPackage.js";
+import { addPackages } from "./lib/addPackage.js";
 
 // 监听 --help 指令
 program.on("--help", () => {
@@ -42,8 +42,8 @@ program
   .description("显示 packages 列表并可以选择进行批量安装")
   .action(async () => {
     cfonts();
-    const { packages } = await inquirer.prompt(addPackagePrompt);
-    await addPackages(packages);
+    const { packages, pkgManager } = await inquirer.prompt(addPackagePrompt);
+    await addPackages(packages, pkgManager);
   });
 
 // 解析用户执行命令传入的参数

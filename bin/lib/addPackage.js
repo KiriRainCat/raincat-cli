@@ -1,10 +1,12 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
+import fs from "fs-extra";
 import { execa } from "execa";
 
 import { extraPackagePrompt } from "./inquirer.js";
 import { ifArrayEmpty } from "./utils.js";
+import { pkgManagers } from "../constants/packages.js";
 
 //* ----------------------------------- 包处理 ---------------------------------- *//
 
@@ -13,7 +15,7 @@ import { ifArrayEmpty } from "./utils.js";
  *
  * @param {Array<object>} packages
  */
-const addPackages = async (packages) => {
+const addPackages = async (packages, pkgManager) => {
   if (ifArrayEmpty(packages)) {
     return;
   }
@@ -34,7 +36,7 @@ const addPackages = async (packages) => {
     }
   }
 
-  installPackages(pkgs);
+  installPackages(pkgs, pkgManager);
 };
 
 //* ----------------------------------- 包安装 ---------------------------------- *//
@@ -44,32 +46,35 @@ const addPackages = async (packages) => {
  *
  * @param {Array<object>} pkgs 包列表 { name, command, postInstallActions?, extras? }
  */
-const installPackages = async (pkgs) => {
+const installPackages = async (pkgs, pkgManager) => {
   console.log();
   const postInstallActions = [];
 
   for (const pkg of pkgs) {
+    let flag = false;
     // 如果当前包有安装后特殊操作
     if (!ifArrayEmpty(pkg.postInstallActions)) {
       for (const func of pkg.postInstallActions) {
         postInstallActions.push({ name: pkg.name, func });
+        flag = true;
       }
     }
 
-    let result;
+    const spinner = ora({ spinner: "line" });
+    spinner.start(`installing package ${chalk.cyan(pkg.name)}`);
     try {
-      const spinner = ora({ spinner: "line" });
-      spinner.start(`installing package ${chalk.cyan(pkg.name)}`);
-
-      result = await execa(pkg.command, { shell: true });
-
+      await execa(`${pkgManager ? pkgManager.add : ""} ${pkg.command}`, { shell: true });
       spinner.stop();
       console.log(chalk.green(`✔️  ${chalk.cyan(pkg.name)} 安装成功！`));
     } catch (err) {
       spinner.stop();
       console.log(chalk.red(`❌  ${chalk.cyan(pkg.name)} 安装失败！`));
-      console.log(`stdout: ${result.stdout}`);
-      console.error(`stderr: ${result.stderr}`);
+      console.log(`stdout: ${err.stdout}`);
+      console.error(`stderr: ${err.stderr}`);
+
+      if (flag) {
+        postInstallActions.pop();
+      }
     }
   }
 
@@ -77,6 +82,7 @@ const installPackages = async (pkgs) => {
 };
 
 //* ---------------------------- 包安装后需要运行的 actions --------------------------- *//
+
 const executeAction = (action) => {
   return new Promise(async (resolve) => {
     await action.func();
@@ -108,7 +114,16 @@ const postInstall = async (postInstallActions) => {
   process.exit();
 };
 
-// TODO: 待添加与完善 -- 自动适配包管理器
-const getCurrentPackageManager = () => {};
+//* ----------------------------- 获取当前用户使用的包管理器 ---------------------------- *//
 
-export default addPackages;
+const getCurrentPackageManager = async () => {
+  const currentManager = [];
+  for (const pkgManager of pkgManagers) {
+    if (fs.existsSync(`./${pkgManager.value.lockFile}`)) {
+      currentManager.push(pkgManager.value);
+    }
+  }
+  return currentManager;
+};
+
+export { addPackages, getCurrentPackageManager };
