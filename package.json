@@ -1,6 +1,6 @@
 {
   "name": "@kiriraincat/raincat-cli",
-  "version": "0.1.11-beta",
+  "version": "0.1.12-beta",
   "description": "柒夜雨猫牌项目 cli 工具",
   "exports": "./bin/index.js",
   "bin": {
@@ -40,6 +40,7 @@
     "inquirer-search-checkbox": "^1.0.0",
     "mustache": "^4.2.0",
     "ora": "^7.0.0",
+    "pkg-updater": "^1.0.4",
     "prettier": "^3.0.0"
   }
 }

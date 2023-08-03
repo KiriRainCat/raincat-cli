@@ -1,3 +1,6 @@
+import cfonts from "./components/cfonts.js";
+import updater from "./components/updater.js";
+
 const ifArrayEmpty = (array) => {
   if (array !== undefined && array.length !== 0) {
     return false;
@@ -23,4 +26,11 @@ const parseChoices = (frameworkChoices, commonChoices) => {
   return choices;
 };
 
-export { ifArrayEmpty, parseChoices };
+const commanderAction = (func) => {
+  cfonts();
+  updater.then(() => {
+    func();
+  });
+};
+
+export { ifArrayEmpty, parseChoices, commanderAction };

@@ -4,7 +4,7 @@ import ora from "ora";
 import fs from "fs-extra";
 import { execa } from "execa";
 
-import { extraPackagePrompt } from "./inquirer.js";
+import { extraPackagePrompt } from "./components/inquirer.js";
 import { ifArrayEmpty } from "./utils.js";
 import { pkgManagers } from "../constants/packages.js";
 

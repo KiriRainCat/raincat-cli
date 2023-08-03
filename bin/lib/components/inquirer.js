@@ -1,12 +1,12 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 
-import { packages, pkgManagers } from "../constants/packages.js";
-import templates from "../constants/templates.js";
-import { parseChoices } from "./utils.js";
+import { packages, pkgManagers } from "../../constants/packages.js";
+import templates from "../../constants/templates.js";
+import { parseChoices } from "../utils.js";
 
 import SearchBox from "inquirer-search-checkbox";
-import { getCurrentPackageManager } from "./addPackage.js";
+import { getCurrentPackageManager } from "../addPackage.js";
 inquirer.registerPrompt("search-checkbox", SearchBox);
 
 const createProjectPrompt = [

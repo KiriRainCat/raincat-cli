@@ -1,5 +1,5 @@
 const path = require("path");
 
-exports.version = `v${require("../../package.json").version}`;
+exports.pkginfo = require("../../package.json");
 
 exports.__dirname = path.join(__dirname, "../");
