@@ -186,8 +186,8 @@ const packages = {
         value: {
           name: "GetX",
           command: "flutter pub add get",
+          postInstallActions: [scripts.flutter_showGetXWebsite],
         },
-        postInstallActions: [scripts.flutter_showGetXWebsite],
       },
       {
         name: "Win32 (ffi)",
@@ -206,9 +206,9 @@ const packages = {
           {
             name: "Dio Cookie Manager",
             command: "flutter pub get dio_cookie_manager",
+            postInstallActions: [scripts.flutter_showDioWebsite],
           },
         ],
-        postInstallActions: [scripts.flutter_showDioWebsite],
       },
     ],
     DB: [
@@ -218,8 +218,8 @@ const packages = {
           name: "Prisma",
           command:
             "flutter pub add orm json_annotation && flutter pub add -d build_runner json_serializable && pnpm add prisma",
+          postInstallActions: [scripts.prisma_initFlutterSchema],
         },
-        postInstallActions: [scripts.prisma_initFlutterSchema],
       },
       {
         name: "Isar",
@@ -227,8 +227,8 @@ const packages = {
           name: "Isar",
           command:
             "flutter pub add isar isar_flutter_libs && flutter pub add -d isar_generator build_runner",
+          postInstallActions: [scripts.flutter_showIsarDBWebsite],
         },
-        postInstallActions: [scripts.flutter_showIsarDBWebsite],
       },
     ],
   },
