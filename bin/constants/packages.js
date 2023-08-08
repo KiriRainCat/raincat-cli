@@ -187,6 +187,7 @@ const packages = {
           name: "GetX",
           command: "flutter pub add get",
         },
+        postInstallActions: [scripts.flutter_showGetXWebsite],
       },
       {
         name: "Win32 (ffi)",
@@ -194,6 +195,20 @@ const packages = {
           name: "Win32 (ffi)",
           command: "flutter pub add ffi win32",
         },
+      },
+      {
+        name: "Dio (http)",
+        value: {
+          name: "Dio (http)",
+          command: "flutter pub get dio",
+        },
+        extras: [
+          {
+            name: "Dio Cookie Manager",
+            command: "flutter pub get dio_cookie_manager",
+          },
+        ],
+        postInstallActions: [scripts.flutter_showDioWebsite],
       },
     ],
     DB: [

@@ -11,8 +11,19 @@ const flutter_showIsarDBWebsite = () => {
   console.log("\nℹ️  Isar 数据库 文档网址: https://isar.dev");
 };
 
-const flutter_showPrismaOrmWebsite = () => {
-  console.log("\nℹ️  Prisma ORM 文档网址: https://prisma.pub/");
+const flutter_showGetXWebsite = () => {
+  console.log(
+    "\nℹ️  GetX 文档网址: https://github.com/jonataslaw/getx/blob/master/README.zh-cn.md"
+  );
 };
 
-export { flutter_showFlutterLeanWebsite, flutter_showIsarDBWebsite };
+const flutter_showDioWebsite = () => {
+  console.log("\nℹ️  Dio 文档网址: https://github.com/cfug/dio/blob/main/dio/README-ZH.md");
+};
+
+export {
+  flutter_showFlutterLeanWebsite,
+  flutter_showIsarDBWebsite,
+  flutter_showGetXWebsite,
+  flutter_showDioWebsite,
+};
