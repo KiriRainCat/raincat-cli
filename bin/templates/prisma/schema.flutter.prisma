@@ -1,0 +1,9 @@
+datasource db {
+  // could be other DBs, such as MySQL
+  provider = "sqlite"
+  url      = "file:dev.db"
+}
+
+generator client {
+  provider = "dart run orm"
+}

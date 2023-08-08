@@ -188,6 +188,33 @@ const packages = {
           command: "flutter pub add get",
         },
       },
+      {
+        name: "Win32 (ffi)",
+        value: {
+          name: "Win32 (ffi)",
+          command: "flutter pub add ffi win32",
+        },
+      },
+    ],
+    DB: [
+      {
+        name: "Prisma",
+        value: {
+          name: "Prisma",
+          command:
+            "flutter pub add orm json_annotation && flutter pub add -d build_runner json_serializable && pnpm add prisma",
+        },
+        postInstallActions: [scripts.prisma_initFlutterSchema],
+      },
+      {
+        name: "Isar",
+        value: {
+          name: "Isar",
+          command:
+            "flutter pub add isar isar_flutter_libs && flutter pub add -d isar_generator build_runner",
+        },
+        postInstallActions: [scripts.flutter_showIsarDBWebsite],
+      },
     ],
   },
 };
