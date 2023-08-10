@@ -78,4 +78,18 @@ const extraPackagePrompt = (parentName, pkgName) => {
   };
 };
 
-export { createProjectPrompt, addPackagePrompt, extraPackagePrompt };
+const licenseInfoPrompt = [
+  {
+    type: "list",
+    name: "type",
+    message: "选择想要生成的证书类型 " + chalk.gray(">>"),
+    choices: [new inquirer.Separator("———— 开源 ————"), "MIT"],
+  },
+  {
+    type: "input",
+    name: "holders",
+    message: "License 持有人(s): " + chalk.gray("(可使用,分隔) >>"),
+  },
+];
+
+export { createProjectPrompt, addPackagePrompt, extraPackagePrompt, licenseInfoPrompt };

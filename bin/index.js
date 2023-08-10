@@ -4,11 +4,16 @@ import { program } from "commander";
 import inquirer from "inquirer";
 import chalk from "chalk";
 
-import { createProjectPrompt, addPackagePrompt } from "./lib/components/inquirer.js";
+import {
+  createProjectPrompt,
+  addPackagePrompt,
+  licenseInfoPrompt,
+} from "./lib/components/inquirer.js";
 import { downloadRepo } from "./lib/components/download.js";
 import { pkginfo } from "./lib/components/info.cjs";
 import { addPackages } from "./lib/addPackage.js";
 import { commanderAction } from "./lib/utils.js";
+import { generateLicense } from "./lib/generator.js";
 
 // 监听 --help 指令
 program.on("--help", () => {
@@ -50,6 +55,16 @@ program
       const { packages, pkgManager } = await inquirer.prompt(addPackagePrompt);
       await addPackages(packages, pkgManager);
     });
+  });
+
+//* 生成模板指令
+program
+  .command("generate")
+  .alias("gen")
+  .description("通过 mustache 模板引擎生成一些常用文件")
+  .action(async () => {
+    const { type, holders } = await inquirer.prompt(licenseInfoPrompt);
+    await generateLicense(type, holders);
   });
 
 // 解析用户执行命令传入的参数
