@@ -4,7 +4,7 @@ import fs from "fs-extra";
 
 import { __dirname } from "./info.cjs";
 
-const renderMITLicense = async (type, holders) => {
+const renderLicense = async (type, holders) => {
   const input = (
     await fs.readFile(path.join(__dirname, `../templates/generators/${type}-LICENSE`))
   ).toString();
@@ -14,4 +14,4 @@ const renderMITLicense = async (type, holders) => {
   await fs.writeFile("./LICENSE", output);
 };
 
-export { renderMITLicense };
+export { renderLicense };
