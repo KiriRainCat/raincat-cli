@@ -3,7 +3,7 @@ import path from "path";
 import prettier from "prettier";
 
 import { ifArrayEmpty } from "../../lib/utils.js";
-import { __dirname } from "../../lib/info.cjs";
+import { __dirname } from "../../lib/components/info.cjs";
 
 const tailwindcss_createConfig = async () => {
   await fs.copyFile(

@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs-extra";
 
-import { __dirname } from "../../lib/info.cjs";
+import { __dirname } from "../../lib/components/info.cjs";
 
 const prisma_initGoSchema = async () => {
   // prisma 文件夹创建

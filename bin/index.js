@@ -6,7 +6,7 @@ import chalk from "chalk";
 
 import { createProjectPrompt, addPackagePrompt } from "./lib/components/inquirer.js";
 import { downloadRepo } from "./lib/components/download.js";
-import { pkginfo } from "./lib/info.cjs";
+import { pkginfo } from "./lib/components/info.cjs";
 import { addPackages } from "./lib/addPackage.js";
 import { commanderAction } from "./lib/utils.js";
 
@@ -29,7 +29,7 @@ program.version(
 );
 
 /* ----------------------------------- 指令 ----------------------------------- */
-// 创建项目指令
+//* 创建项目指令
 program
   .command("create")
   .description("选择模板创建项目")
@@ -41,7 +41,7 @@ program
     });
   });
 
-// 安装 package(s) 指令
+//* 安装 package(s) 指令
 program
   .command("add")
   .description("显示 packages 列表并可以选择进行批量安装")

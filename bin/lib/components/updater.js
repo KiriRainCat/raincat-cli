@@ -1,5 +1,5 @@
 import updater from "pkg-updater";
-import { pkginfo } from "../info.cjs";
+import { pkginfo } from "./info.cjs";
 
 export default updater({
   pkg: pkginfo,
