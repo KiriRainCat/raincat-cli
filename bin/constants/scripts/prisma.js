@@ -34,7 +34,7 @@ const prisma_initGoSchema = async () => {
     if (!fs.readFileSync("./.gitignore").toString().includes(".env")) {
       fs.appendFileSync(
         "./.gitignore",
-        "\n # Keep environment variables out of version control\n.env"
+        "\n# Keep environment variables out of version control\n.env"
       );
     }
   } else {
@@ -56,28 +56,13 @@ const prisma_initFlutterSchema = async () => {
     );
   }
 
-  // .env 写入
-  if (fs.existsSync("./.env")) {
-    if (!fs.readFileSync("./.env").toString().includes("DATABASE_URL")) {
-      fs.appendFileSync(
-        ".env",
-        fs.readFileSync(path.join(__dirname, "templates/prisma/.env")).toString()
-      );
-    }
-  } else {
-    await fs.copyFile(path.join(__dirname, "templates/prisma/.env"), "./.env");
-  }
-
   // .gitignore 写入
   if (fs.existsSync("./.gitignore")) {
     if (!fs.readFileSync("./.gitignore").toString().includes(".env")) {
-      fs.appendFileSync(
-        "./.gitignore",
-        "\n # Keep environment variables out of version control\n.env"
-      );
+      fs.appendFileSync("./.gitignore", "\nnode_modules");
     }
   } else {
-    fs.appendFileSync("./.gitignore", "# Keep environment variables out of version control\n.env");
+    fs.appendFileSync("./.gitignore", "\nnode_modules");
   }
 };
 

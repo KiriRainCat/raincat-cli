@@ -43,11 +43,14 @@ const addPackagePrompt = [
   {
     type: "list",
     name: "pkgManager",
-    message: "请选择想要创建的项目模板 " + chalk.gray(">>"),
+    message: "请选择想要使用的包管理器 " + chalk.gray(">>"),
     when: async (answers) => {
-      ans[1] = await getCurrentPackageManager();
-      answers.pkgManager = ans[1][0];
-      return ans[1].length !== 1 && answers.framework.isFrontend;
+      if (answers.framework.isFrontend) {
+        ans[1] = await getCurrentPackageManager();
+        answers.pkgManager = ans[1][0];
+        return ans[1].length !== 1 && answers.framework.isFrontend;
+      }
+      return false;
     },
     choices: [...pkgManagers],
   },
@@ -57,7 +60,7 @@ const addPackagePrompt = [
     message: "选择想要安装的 package(s) " + chalk.gray(">>"),
     when: (answers) => {
       ans[0] = answers.framework;
-      return ans[0] !== undefined && ans[1] !== undefined;
+      return ans[0] !== undefined;
     },
     choices: () => [
       ...parseChoices(
