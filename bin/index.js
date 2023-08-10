@@ -8,6 +8,7 @@ import {
   createProjectPrompt,
   addPackagePrompt,
   licenseInfoPrompt,
+  generateTypePrompt,
 } from "./lib/components/inquirer.js";
 import { downloadRepo } from "./lib/components/download.js";
 import { pkginfo } from "./lib/components/info.cjs";
@@ -63,8 +64,14 @@ program
   .alias("gen")
   .description("通过 mustache 模板引擎生成一些常用文件")
   .action(async () => {
-    const { type, holders } = await inquirer.prompt(licenseInfoPrompt);
-    await generateLicense(type, holders);
+    const { type } = await inquirer.prompt(generateTypePrompt);
+    switch (type) {
+      case "license": {
+        const { type, holders } = await inquirer.prompt(licenseInfoPrompt);
+        await generateLicense(type, holders);
+        return;
+      }
+    }
   });
 
 // 解析用户执行命令传入的参数

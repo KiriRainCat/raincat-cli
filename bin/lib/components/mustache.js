@@ -9,7 +9,7 @@ const renderMITLicense = async (type, holders) => {
     await fs.readFile(path.join(__dirname, `../templates/generators/${type}-LICENSE`))
   ).toString();
 
-  const output = mustache.render(input, { holders: holders });
+  const output = mustache.render(input, { year: new Date().getFullYear(), holders: holders });
 
   await fs.writeFile("./LICENSE", output);
 };

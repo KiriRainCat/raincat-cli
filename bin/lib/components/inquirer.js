@@ -78,12 +78,19 @@ const extraPackagePrompt = (parentName, pkgName) => {
   };
 };
 
+const generateTypePrompt = {
+  type: "list",
+  name: "type",
+  message: "选择想要生成的文件类型 " + chalk.gray(">>"),
+  choices: [{ name: "证书", value: "license" }],
+};
+
 const licenseInfoPrompt = [
   {
     type: "list",
     name: "type",
     message: "选择想要生成的证书类型 " + chalk.gray(">>"),
-    choices: [new inquirer.Separator("———— 开源 ————"), "MIT"],
+    choices: [new inquirer.Separator("———— 开源 ————"), "MIT", "APACHE"],
   },
   {
     type: "input",
@@ -92,4 +99,10 @@ const licenseInfoPrompt = [
   },
 ];
 
-export { createProjectPrompt, addPackagePrompt, extraPackagePrompt, licenseInfoPrompt };
+export {
+  createProjectPrompt,
+  addPackagePrompt,
+  extraPackagePrompt,
+  generateTypePrompt,
+  licenseInfoPrompt,
+};
